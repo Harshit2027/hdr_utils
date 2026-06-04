@@ -1,155 +1,261 @@
-# 🛠️ HDR Utils
+<div align="center">
+<a href="https://pub.dev/packages/hdr_utils"><img src="https://img.shields.io/pub/v/hdr_utils.svg" /></a>
+<a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-yellow.svg"/></a>
+<a href="https://github.com/Harshit2027/hdr_utils/issues" target="_blank"><img alt="GitHub Issues" src="https://img.shields.io/github/issues-raw/Harshit2027/hdr_utils?style=flat" /></a>
+<img src="https://img.shields.io/github/last-commit/Harshit2027/hdr_utils" />
+<a href="https://github.com/Harshit2027/hdr_utils"><img src="https://img.shields.io/github/stars/Harshit2027/hdr_utils?style=social" /></a>
+</div>
 
-A modern, highly-polished package containing essential UI widgets, extensions, validators, and logger utilities for Flutter developers. Optimized for visual excellence, distinct naming, and developer ergonomics.
+---
 
-## 🚀 Features
+## ❤️ Show some love and support the project
 
-- **📝 Widgets**: Distinctly prefixed with `Hdr` to identify they are package components.
-  - `HdrTextField`: A beautiful Material 3 text field with built-in auto-validation, border animations, and automatic unfocus on tapping outside.
-  - `HdrImagePickerBuilder`: Displays local files (`XFile` bytes) or cached network images with clip behaviors and optional shapes.
-  - `HdrCustomShimmer` & `HdrSkeletonShimmer`: Premium skeleton loaders to build loading states.
-- **🛡️ Utilities**: Grouped into static helper classes to avoid naming conflicts.
-  - `ValidatorUtils`: Reusable logic for Full Name, Email, Password, Phone, and OTP validators with custom localized messages support.
-  - `DialogUtils`: Standard alerts, confirmations (yes/no), and loading dialog block overlays with blurred backdrop filter backgrounds.
-  - `ImagePickerUtils`: Helpers to pick images from camera or gallery.
-  - `LoggerUtils`: Fully safe developer logger with ANSI colored console output and file logs persistence.
-  - `RegExpUtils`: Regular expressions for email, phone, name, space, amount, bank account, and IFSC codes.
-- **🧩 Extensions**: Helpful extensions on core types:
-  - `ContextExtensions`: Easy access to dimensions, themes, padding, and soft keyboard dismissal.
-  - `DateTimeExtensions`: Time-ago formatting, checking today status, and UTC/local string conversions.
-  - `ListExtensions` & `IterableExtensions`: Null-safe helpers, index mapping, and asynchronous iterations.
-  - `NumberExtensions`: Instagram-style compact formatting (K, M, B) and localized currency amounts.
-  - `ColorExtensions`: Subtle transparency filters.
-  - `StringExtensions`: Birth-date age calculation, UTC/local date parsing, SVG/Image/Video format validations, and email obscuring.
+### Star the Repository
+If you find this package useful, please star the repository on [GitHub](https://github.com/Harshit2027/hdr_utils) to show your support! ⭐
+
+---
+
+## 📱 Platform Support
+
+| Android | iOS | Web |
+| :-----: | :-: | :-: |
+|   ✔️    | ✔️  | ✔️  |
 
 ---
 
 ## 📦 Installation
 
-Add the following to your `pubspec.yaml`:
+Add this package to `pubspec.yaml` as follows:
 
-```yaml
-dependencies:
-  hdr_utils: ^0.0.1
+```console
+$ flutter pub add hdr_utils
 ```
 
-And run:
-```bash
-flutter pub get
+Import package:
+
+```dart
+import 'package:hdr_utils/hdr_utils.dart';
 ```
 
 ---
 
-## 💡 Usage Examples
+## 📋 Contents
 
-### 1. Form Validation with `HdrTextField`
+- [🧩 Widgets](#-widgets)
+  - [HdrTextField](#hdrtextfield)
+  - [HdrImagePickerBuilder](#hdrimagepickerbuilder)
+  - [HdrCustomShimmer](#hdrcustomshimmer)
+  - [HdrSkeletonShimmer](#hdrskeletonshimmer)
+- [🛠️ Utilities](#️-utilities)
+  - [ValidatorUtils](#validatorutils)
+  - [DialogUtils](#dialogutils)
+  - [ImagePickerUtils](#imagepickerutils)
+  - [LoggerUtils](#loggerutils)
+  - [RegExpUtils](#regexputils)
+- [⚡ Extensions](#-extensions)
+  - [BuildContext Extensions](#buildcontext-extensions)
+  - [DateTime Extensions](#datetime-extensions)
+  - [List & Iterable Extensions](#list--iterable-extensions)
+  - [Number & Double Extensions](#number--double-extensions)
+  - [Color Extensions](#color-extensions)
+  - [String Extensions](#string-extensions)
 
-Combine `HdrTextField` and `ValidatorUtils` to build forms:
+---
 
+## 🧩 Widgets
+
+### HdrTextField
+A highly polished Material 3 text field with built-in validation displays, borders, custom padding, and automatic tap-outside keyboard unfocus.
 ```dart
 HdrTextField(
   controller: emailController,
   labelText: "Email Address",
   hintText: "Enter your email",
+  prefixIcon: Icon(Icons.email_outlined),
   keyboardType: TextInputType.emailAddress,
-  validator: (val) => ValidatorUtils.validateEmailAddress(val, invalidError: "Incorrect email format."),
+  validator: (val) => ValidatorUtils.validateEmailAddress(val),
 );
 ```
 
-### 2. Standard Dialogs with `DialogUtils`
+### HdrImagePickerBuilder
+Renders local image bytes (via `XFile`) or cached network URLs under customizable dimensions and shapes.
+```dart
+HdrImagePickerBuilder(
+  localImage: selectedImageFile,
+  imageUrl: "https://example.com/avatar.png",
+  width: 120,
+  height: 120,
+  shape: CircleBorder(),
+  placeholderBuilder: (context) => Icon(Icons.person, size: 40),
+  onTap: () {
+    // Trigger image picker
+  },
+);
+```
 
-Show beautiful, blurred alerts or block interaction during network requests using the loading modal:
+### HdrCustomShimmer
+Wraps any custom widget child and applies a smooth loading shimmer gradient.
+```dart
+HdrCustomShimmer(
+  child: Card(
+    child: ListTile(title: Text("Loading title")),
+  ),
+);
+```
 
+### HdrSkeletonShimmer
+Outputs simple rectangular or circular colored block placeholders to build skeleton screen loading layouts.
+```dart
+// Rectangular skeleton block
+HdrSkeletonShimmer(width: 140, height: 16),
+
+// Circular skeleton block
+HdrSkeletonShimmer.circular(size: 60),
+```
+
+---
+
+## 🛠️ Utilities
+
+### ValidatorUtils
+Group of reusable text field validators with default English messages and custom error overrides.
+```dart
+// Validation checks
+ValidatorUtils.validateFullName(name);
+ValidatorUtils.validateEmailAddress(email, invalidError: "Invalid email syntax.");
+ValidatorUtils.validatePhoneNumber(phone, 10, 10);
+ValidatorUtils.validatePassword(password, isNewPasswordValidation: true);
+ValidatorUtils.validateConfirmPassword(confirmPass, password);
+```
+
+### DialogUtils
+Industry-standard alert, confirmation, and loader overlay modals built with rounded card styling and blurred backgrounds.
 ```dart
 // 1. Show alert dialog
 await DialogUtils.showAlert(
   context: context,
   title: "Welcome",
-  message: "Thank you for using HDR Utils!",
+  message: "Alert information message.",
 );
 
-// 2. Show loading spinner and dismiss it when done
-final dismissLoader = DialogUtils.showLoading(context: context, message: "Syncing data...");
-await Future.delayed(Duration(seconds: 2));
-dismissLoader();
-```
-
-### 3. Image Picking and Rendering
-
-Pick an image and render it using `HdrImagePickerBuilder`:
-
-```dart
-XFile? selectedImage;
-
-void pickImage() async {
-  final image = await ImagePickerUtils.pickImageFromGallery();
-  if (image != null) {
-    setState(() {
-      selectedImage = image;
-    });
-  }
-}
-
-// In build():
-HdrImagePickerBuilder(
-  localImage: selectedImage,
-  imageUrl: null,
-  placeholderBuilder: (context) => Icon(Icons.person, size: 50),
-  shape: CircleBorder(),
-  onTap: pickImage,
-  width: 100,
-  height: 100,
-)
-```
-
-### 4. Skeleton Loading (Shimmers)
-
-Easily build list loading states with skeleton blocks:
-
-```dart
-ListView.builder(
-  itemCount: 3,
-  itemBuilder: (context, index) => Padding(
-    padding: const EdgeInsets.all(8.0),
-    child: Row(
-      children: [
-        HdrSkeletonShimmer.circular(size: 50),
-        SizedBox(width: 16),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            HdrSkeletonShimmer(width: 120, height: 16),
-            SizedBox(height: 8),
-            HdrSkeletonShimmer(width: 80, height: 12),
-          ],
-        )
-      ],
-    ),
-  ),
+// 2. Show confirm dialog (returns Future<bool>)
+bool confirmed = await DialogUtils.showConfirm(
+  context: context,
+  title: "Delete item?",
+  message: "This action cannot be undone.",
 );
+
+// 3. Show loading spinner overlay (returns a dismissal callback)
+final dismiss = DialogUtils.showLoading(context: context, message: "Uploading package...");
+await Future.delayed(Duration(seconds: 3));
+dismiss(); // Call to close modal
 ```
 
-### 5. Color Logger
-
+### ImagePickerUtils
+Static wrappers around the device camera and gallery image picking actions.
 ```dart
+XFile? galleryImage = await ImagePickerUtils.pickImageFromGallery();
+XFile? cameraImage = await ImagePickerUtils.pickImageFromCamera();
+```
+
+### LoggerUtils
+ANSI-colored log printer to debug console with optional path directory file storage.
+```dart
+// Print colored console logs
 LoggerUtils.info("Info log message");
 LoggerUtils.debug("Debug testing message");
-LoggerUtils.success("Database connected successfully");
-LoggerUtils.error("Failed to fetch API endpoint");
+LoggerUtils.success("Database sync successful!");
+LoggerUtils.error("Network request failed.");
+
+// Optional local file logger initialization (no-op on Web)
+await LoggerUtils.init();
 ```
 
-> [!NOTE]
-> Console logging works out-of-the-box. To optionally persist log files to the device's storage (Application Documents directory), initialize the logger in your `main()` method:
-> ```dart
-> void main() async {
->   WidgetsFlutterBinding.ensureInitialized();
->   await LoggerUtils.init(); // Optional: enables local file logging
->   runApp(const MyApp());
-> }
-> ```
+### RegExpUtils
+Collection of matching regular expressions.
+```dart
+RegExpUtils.emailPatternRegExp
+RegExpUtils.passwordPatternRegExp
+RegExpUtils.numberRegExp
+```
 
 ---
 
-## 🛠 Maintainers
+## ⚡ Extensions
 
-Built and maintained by [Harshit Rajput](https://github.com/Harshit2027)
+### BuildContext Extensions
+```dart
+// Access MediaQuery dimensions
+double screenWidth = context.width;
+double screenHeight = context.height;
+
+// Access Theme colors
+ThemeData theme = context.theme;
+ColorScheme colors = context.colorScheme;
+
+// Keyboard manager
+context.hideKeyboard();
+```
+
+### DateTime Extensions
+```dart
+// Formatting dates
+String formatted = DateTime.now().toLocalString("yyyy-MM-dd");
+
+// Time Ago labels
+String timeAgo = DateTime.now().subtract(Duration(minutes: 5)).timeAgoLabel; // "5 min ago"
+```
+
+### List & Iterable Extensions
+```dart
+// Group items by key
+Map<String, List<User>> grouped = users.groupBy((user) => user.role);
+
+// Safe access
+User? first = users.firstOrNull;
+```
+
+### Number & Double Extensions
+```dart
+// localized amount format
+String currency = 12500.5.formattedAmount(); // "12,500.50"
+
+// Compact Instagram notation
+String followers = 1500000.compactFormat; // "1.5M"
+```
+
+### Color Extensions
+```dart
+// Quick opacity applications
+Color shaded = Colors.blue.applyOpacity(0.5);
+```
+
+### String Extensions
+```dart
+// Check format suffixes
+bool isSvg = "icon.svg".isSvg;
+bool isImage = "image.png".isImage;
+
+// Email masking
+String obscured = "developer.harshit@example.com".obscureEmail(); // "dev*****************@example.com"
+
+// Capitalization
+String title = "flutter".capitalize; // "Flutter"
+```
+
+---
+
+## 🐛 Features and Bugs
+
+Please file feature requests and bugs at the [GitHub Issue Tracker](https://github.com/Harshit2027/hdr_utils/issues).
+
+## 📧 Suggestions & Contributions
+
+If you have any suggestions, feature ideas, or feedback, feel free to reach out via email:
+👉 **[harshitrajput396450@gmail.com](mailto:harshitrajput396450@gmail.com)**
+
+---
+
+## ⭐ If you like the package, a star to the repository will mean a lot.
+
+## Thank you ❤️
