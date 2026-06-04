@@ -43,6 +43,7 @@ class HdrTextField extends StatelessWidget {
   final void Function(PointerDownEvent)? onTapOutside;
   final FocusNode? focusNode;
   final void Function()? onEditingComplete;
+  final int? errorMaxLines;
 
   const HdrTextField({
     super.key,
@@ -86,6 +87,7 @@ class HdrTextField extends StatelessWidget {
     this.onTapOutside,
     this.focusNode,
     this.onEditingComplete,
+    this.errorMaxLines = 5,
   });
 
   @override
@@ -179,6 +181,7 @@ class HdrTextField extends StatelessWidget {
                 border: defaultEnabledBorder,
                 errorBorder: defaultErrorBorder,
                 disabledBorder: defaultDisabledBorder,
+                errorMaxLines: errorMaxLines,
                 counterText: counterText,
                 suffix: suffix,
                 hintText: hintText,

@@ -90,6 +90,7 @@ class _ShowcaseDashboardState extends State<ShowcaseDashboard>
         bottom: TabBar(
           controller: _tabController,
           isScrollable: true,
+          tabAlignment: TabAlignment.start,
           tabs: const [
             Tab(
               icon: Icon(Icons.check_circle_outline),
@@ -124,6 +125,7 @@ class _ShowcaseDashboardState extends State<ShowcaseDashboard>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 12),
             Text(
               "HdrTextField & ValidatorUtils",
               style: context.textTheme.titleLarge?.copyWith(
@@ -407,25 +409,27 @@ class _ShowcaseDashboardState extends State<ShowcaseDashboard>
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "HdrSkeletonShimmer Skeleton Loaders",
-                    style: context.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "HdrSkeletonShimmer Skeleton Loaders",
+                      style: context.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "Toggle switch to load mock data",
-                    style: context.textTheme.bodySmall?.copyWith(
-                      color: context.colorScheme.onSurfaceVariant,
+                    Text(
+                      "Toggle switch to load mock data",
+                      style: context.textTheme.bodySmall?.copyWith(
+                        color: context.colorScheme.onSurfaceVariant,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              const SizedBox(width: 12),
               Switch.adaptive(
                 value: !_isShimmerLoading,
                 onChanged: (val) {
@@ -558,8 +562,10 @@ class _ShowcaseDashboardState extends State<ShowcaseDashboard>
           const SizedBox(height: 8),
           const Text("Click to output colored logs to debug terminal:"),
           const SizedBox(height: 12),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          Wrap(
+            spacing: 12,
+            runSpacing: 12,
+            alignment: WrapAlignment.spaceEvenly,
             children: [
               ElevatedButton(
                 onPressed: () => LoggerUtils.info("Info level log message"),

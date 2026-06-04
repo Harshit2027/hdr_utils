@@ -133,6 +133,7 @@ ListView.builder(
 
 ```dart
 LoggerUtils.info("Info log message");
+LoggerUtils.debug("Debug testing message");
 LoggerUtils.success("Database connected successfully");
 LoggerUtils.error("Failed to fetch API endpoint");
 ```
